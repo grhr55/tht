@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LIVE MONITORING</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 100vh; width: 100%; margin: 0; padding: 0; }
+        body { margin: 0; background: #000; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const map = L.map('map').setView([0, 0], 2); // Стартовый вид на весь мир
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Target Tracking System'
+        }).addTo(map);
+
+        const markers = {}; // Тут храним маркеры всех телефонов
+
+        const socket = io();
+
+        socket.on('location_update', (data) => {
+            const { deviceId, lat, lng } = data;
+
+            if (markers[deviceId]) {
+                // Если телефон уже есть на карте — просто двигаем маркер
+                markers[deviceId].setLatLng([lat, lng]);
+            } else {
+                // Если новый — создаем маркер
+                markers[deviceId] = L.marker([lat, lng]).addTo(map)
+                    .bindPopup(`ID: ${deviceId}`)
+                    .openPopup();
+                
+                // Центрируем карту на первом появившемся устройстве
+                map.setView([lat, lng], 15);
+            }
+        });
+    </script>
+</body>
+</html>
