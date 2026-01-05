@@ -21,8 +21,7 @@
 
         const markers = {}; // Тут храним маркеры всех телефонов
 
-        const socket = io("https://tht-1.onrender.com");
-;
+        const socket = io();
 
         socket.on('location_update', (data) => {
             const { deviceId, lat, lng } = data;
