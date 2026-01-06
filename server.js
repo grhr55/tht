@@ -65,4 +65,4 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-server.listen(port, '0.0.0.0', () => console.log(`Система мониторинга запущена на порту ${port}`));
+server.listen(port, '0.0.0.0', () => console.log(`Системамониторинга запущена на порту ${port}`));
