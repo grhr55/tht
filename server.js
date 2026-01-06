@@ -55,4 +55,4 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-server.listen(port, '0.0.0.0', () => console.log(`Monitorig system running on port ${port}`));
+server.listen(port, '0.0.0.0', () => console.log(`Monitorig sysem running on port ${port}`));
